@@ -3,10 +3,15 @@ import { Link } from "react-router-dom";
 
 import "./styles/Home.css";
 import SpotifyLogoWhite from "../images/Spotify Logo White.png";
+import BackgroundAlbumCollage from "../images/album-background.jpg";
 
 export default function Home() {
 	return (
 		<div className="home-container container-fluid align-items-center">
+			<br />
+			<br />
+			<br />
+			<br />
 			<div className="row justify-content-center">
 				<h1>Discover and share your favorite albums!</h1>
 			</div>
@@ -20,7 +25,7 @@ export default function Home() {
 			<br />
 			<div className="row justify-content-center">
 				<Link to="/albums" className="btn btn-primary">
-					Connect with{"  "}
+					Login with{"  "}
 					<img
 						className="btn__logo"
 						src={SpotifyLogoWhite}
