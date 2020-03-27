@@ -16,7 +16,7 @@ var config = require("./config.json");
 
 var client_id = config.client_id; // Your client id
 var client_secret = config.client_secret; // Your secret
-var redirect_uri = config.redirect; // Your redirect uri
+var redirect_uri = config.redirect_uri; // Your redirect uri
 
 /**
  * Generates a random string containing numbers and letters
@@ -71,7 +71,7 @@ app.get("/callback", function(req, res) {
 
 	if (state === null || state !== storedState) {
 		res.redirect(
-			"/#" +
+			"http://localhost:3000/404" +
 				querystring.stringify({
 					error: "state_mismatch"
 				})
@@ -113,7 +113,7 @@ app.get("/callback", function(req, res) {
 
 				// we can also pass the token to the browser to make requests from there
 				res.redirect(
-					"/#" +
+					"http://localhost:3000/albums?" +
 						querystring.stringify({
 							access_token: access_token,
 							refresh_token: refresh_token
@@ -121,7 +121,7 @@ app.get("/callback", function(req, res) {
 				);
 			} else {
 				res.redirect(
-					"/#" +
+					"http://localhost:3000/404" +
 						querystring.stringify({
 							error: "invalid_token"
 						})
