@@ -5,10 +5,10 @@ import Footer from "./Footer";
 
 export default function Layout(props) {
 	return (
-		<div>
+		<React.Fragment>
 			<NavBar></NavBar>
 			{props.children}
 			{/* <Footer></Footer> */}
-		</div>
+		</React.Fragment>
 	);
 }

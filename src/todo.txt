@@ -1,0 +1,31 @@
+- check current code implementation for enhancements
+
+- clean console log
+
+- album collage pic for home page
+
+- implement footer
+
+- placeholder content for loading album page
+
+- pagination for album list
+
+- album list element expand to show:
+    - number of liked tracks out of how many
+    - list of like tracks
+
+- album list element add links to:
+    - artist spotify page
+    - album spotify page
+
+- generate collage
+
+- createplaylist
+
+- create better similitude mean formula
+
+- log out button
+
+- expired token error handling
+
+- general error handling

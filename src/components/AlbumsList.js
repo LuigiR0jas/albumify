@@ -11,7 +11,13 @@ export default class AlbumsList extends Component {
 						<h2>These are your favorite albums!</h2>
 					</div>
 				</div>
-				<AlbumsListElement></AlbumsListElement>
+				{this.props.albums.slice(0, 15).map((album, index) => {
+					return (
+						<AlbumsListElement
+							album={album}
+							rank={index + 1}></AlbumsListElement>
+					);
+				})}
 			</React.Fragment>
 		);
 	}
