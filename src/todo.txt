@@ -1,12 +1,10 @@
-- check current code implementation for enhancements
+- check current code implementation for enhancements (check console and terminal messages)
 
 - clean console log
 
 - album collage pic for home page
 
 - implement footer
-
-- placeholder content for loading album page
 
 - pagination for album list
 

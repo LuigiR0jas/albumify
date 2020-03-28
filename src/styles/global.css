@@ -2,6 +2,7 @@
 @import url("https://fonts.googleapis.com/css?family=Poppins&display=swap");
 
 html,
+body,
 .app,
 .fill {
 	height: 100%;
@@ -12,4 +13,8 @@ body {
 	background-color: #1a1414;
 	color: white;
 	font-family: "Montserrat";
+}
+
+.smallText {
+	font-size: 12px;
 }

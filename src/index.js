@@ -8,8 +8,5 @@ import "./styles/global.css";
 
 // Components
 import App from "./components/App";
-import * as serviceWorker from "./serviceWorker";
 
 ReactDOM.render(<App />, document.getElementById("app"));
-
-serviceWorker.unregister();

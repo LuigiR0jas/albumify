@@ -6,11 +6,11 @@ import afterlaughter from "../images/After Laughter.jpg";
 
 export default function AlbumsListElement(props) {
 	return (
-		<div className="container">
-			<div className="row albumlist-element">
+		<div className="container albumlist-element">
+			<div className="row justify-content-center">
 				<div className="col-2 align-self-center">
-					<div className="row justify-content-center">
-						<h1># {props.rank}</h1>
+					<div className="row justify-content-end mr-1">
+						<h3># {props.rank}</h3>
 					</div>
 				</div>
 				<div className="col-2">
@@ -20,11 +20,11 @@ export default function AlbumsListElement(props) {
 						alt=""
 					/>
 				</div>
-				<div className="col-8 align-self-center">
-					<h1>
+				<div className="col-6 align-self-center">
+					<h3>
 						{props.album.name} ({props.album.year})
-					</h1>
-					<h4 className="mt-0">{props.album.artists[0].name}</h4>
+					</h3>
+					<h5 className="mt-0">{props.album.artists[0].name}</h5>
 
 					<p>
 						{" "}

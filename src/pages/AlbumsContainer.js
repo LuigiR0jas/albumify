@@ -2,8 +2,6 @@ import React, { Component } from "react";
 import queryString from "query-string";
 
 import Albums from "./Albums";
-import AlbumsList from "../components/AlbumsList";
-import Loading from "../components/Loading";
 
 export default class AlbumsContainer extends Component {
 	constructor(props) {
@@ -12,11 +10,13 @@ export default class AlbumsContainer extends Component {
 		const values = queryString.parse(this.props.location.search);
 
 		this.state = {
-			loading: true,
+			user_loading: true,
+			albums_loading: true,
 			error: null,
 			access_token: values.access_token,
 			refresh_token: values.refresh_token,
 			user: null,
+			fetching_progress: "",
 			trackList: [],
 			albumList: [],
 			sortedAlbumList: []
@@ -54,9 +54,8 @@ export default class AlbumsContainer extends Component {
 				return response.json();
 			})
 			.then(data => {
-				console.log(data);
 				this.setState({
-					loading: false,
+					user_loading: false,
 					user: {
 						displayName: data.display_name,
 						avatar: data.images[0].url,
@@ -66,6 +65,11 @@ export default class AlbumsContainer extends Component {
 						product: data.product
 					}
 				});
+				// setTimeout(() => {
+				// 	this.setState({
+				// 		user_loading: false
+				// 	});
+				// }, 5000);
 			})
 			.catch(error => {
 				console.log(error);
@@ -104,14 +108,12 @@ export default class AlbumsContainer extends Component {
 						preview_url: track.preview_url
 					});
 				}
+				this.calculateFetchingProgress(trackList.length, data.total);
 
 				if (data.next !== null) {
-					console.log(
-						"There are songs left to retrieve. Requesting..."
-					);
+					// If there are songs left, call the function again with the next url
 					this.fetchTracks(trackList, data.next);
 				} else {
-					console.log("Complete tracklist created");
 					this.setState({
 						trackList: trackList
 					});
@@ -127,6 +129,13 @@ export default class AlbumsContainer extends Component {
 				// error handling
 				console.log(error);
 			});
+	};
+
+	calculateFetchingProgress = (current, total) => {
+		let progress = Math.round((current / total) * 100);
+		this.setState({
+			fetching_progress: progress
+		});
 	};
 
 	getRatio = (likes, totalTracks) => {
@@ -198,13 +207,12 @@ export default class AlbumsContainer extends Component {
 	populateAlbumList = (trackList = []) => {
 		// Get trackList from localstorage for testing purposes
 		trackList = JSON.parse(localStorage.getItem("tracklist"));
-		console.log(trackList);
 
 		let albumList = [];
 
 		for (let track of trackList) {
 			// An album is being defined as a collection of more than 6 tracks
-			if (track.album.total_tracks >= 6) {
+			if (track.album.total_tracks >= 4) {
 				// Automatically add the first album
 				if (albumList.length == 0) {
 					albumList = this.addAlbum(albumList, track);
@@ -230,8 +238,6 @@ export default class AlbumsContainer extends Component {
 				}
 			}
 		}
-		console.log("Albumlist population finished: ");
-		console.log(albumList);
 		this.setState({
 			albumList: albumList
 		});
@@ -248,23 +254,21 @@ export default class AlbumsContainer extends Component {
 			}
 			return 0;
 		});
-		console.log("Sorting finished: ");
-		console.log(sortedAlbumList);
 
 		this.setState({
+			albums_loading: false,
 			sortedAlbumList: sortedAlbumList
 		});
 	};
 
 	render() {
-		if (this.state.loading) {
-			return <Loading></Loading>;
-		} else {
-			return (
-				<Albums
-					user={this.state.user}
-					albums={this.state.sortedAlbumList}></Albums>
-			);
-		}
+		return (
+			<Albums
+				userLoading={this.state.user_loading}
+				albumsLoading={this.state.albums_loading}
+				progress={this.state.fetching_progress}
+				user={this.state.user}
+				albums={this.state.sortedAlbumList}></Albums>
+		);
 	}
 }
