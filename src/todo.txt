@@ -1,8 +1,6 @@
 - check current code implementation for enhancements (check console and terminal messages)
 
-- album collage pic for home page
-
-- pagination for album list
+- fix implementation of layout container
 
 - album list element expand to show:
     - number of liked tracks out of how many

@@ -101,7 +101,7 @@ export default class AlbumsList extends Component {
 
 					<br />
 					<br />
-					<div className="row justify-content-center">
+					<div className="row justify-content-center pb-4">
 						<div className="col">
 							<div className="row justify-content-center">
 								<button

@@ -1,4 +1,9 @@
 .content-wrap {
-	padding-top: 2.5rem;
-	padding-bottom: 5rem;
+	padding-bottom: 2.5rem;
+}
+
+.home-hero {
+	padding-bottom: 2.5rem;
+	height: 100vh;
+	background-image: url(../../images/album-background2.png);
 }

@@ -9,7 +9,7 @@ export default function Layout(props) {
 	return (
 		<React.Fragment>
 			<NavBar></NavBar>
-			<div className="content-wrap">{props.children}</div>
+			<div className={props.wrapperClass}>{props.children}</div>
 			<Footer></Footer>
 		</React.Fragment>
 	);

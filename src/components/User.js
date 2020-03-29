@@ -4,7 +4,7 @@ import "./styles/User.css";
 
 export default function User(props) {
 	return (
-		<div className="container">
+		<div className="container pt-4">
 			<div className="row justify-content-start align-items-center">
 				<div className="col-2">
 					<div className="row justify-content-end">
