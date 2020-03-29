@@ -5,12 +5,16 @@ import "./styles/Footer.css";
 export default function Footer() {
 	return (
 		<footer>
-			<div className="container">
-				<div className="row justify-content-center">
-					<p className="footer-text">
-						Developed with 💖 by{"  "}
-						<a href="https://github.com/LuigiR0jas/">@LuigiR0jas</a>
-					</p>
+			<div className="container fill">
+				<div className="row">
+					<div className="col align-self-center">
+						<p className="footer-text">
+							Developed with 💖 by{"  "}
+							<a href="https://github.com/LuigiR0jas/">
+								@LuigiR0jas
+							</a>
+						</p>
+					</div>
 				</div>
 			</div>
 		</footer>

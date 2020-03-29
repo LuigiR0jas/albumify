@@ -1,10 +1,6 @@
 - check current code implementation for enhancements (check console and terminal messages)
 
-- clean console log
-
 - album collage pic for home page
-
-- implement footer
 
 - pagination for album list
 

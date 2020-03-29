@@ -19,7 +19,8 @@ export default class AlbumsContainer extends Component {
 			fetching_progress: "",
 			trackList: [],
 			albumList: [],
-			sortedAlbumList: []
+			sortedAlbumList: [],
+			slicedAlbumList: []
 		};
 	}
 
@@ -256,8 +257,37 @@ export default class AlbumsContainer extends Component {
 		});
 
 		this.setState({
-			albums_loading: false,
 			sortedAlbumList: sortedAlbumList
+		});
+		this.albumListSlice(sortedAlbumList, 20);
+	};
+
+	albumListSlice = (sortedAlbumList, subArraySize) => {
+		// sortedAlbumList is the array we will slice in chunks
+		// subArraySize is the length each subarray will have
+
+		let slicedAlbumList = [],
+			auxiliaryArray = [];
+
+		sortedAlbumList.forEach((album, index, sortedAlbumList) => {
+			let realIndex = index + 1;
+			album["rank"] = realIndex;
+
+			if (
+				Number.isInteger(realIndex / subArraySize) ||
+				realIndex == sortedAlbumList.length
+			) {
+				auxiliaryArray.push(album);
+				slicedAlbumList.push(auxiliaryArray);
+				auxiliaryArray = [];
+			} else {
+				auxiliaryArray.push(album);
+			}
+		});
+
+		this.setState({
+			albums_loading: false,
+			slicedAlbumList: slicedAlbumList
 		});
 	};
 
@@ -268,7 +298,7 @@ export default class AlbumsContainer extends Component {
 				albumsLoading={this.state.albums_loading}
 				progress={this.state.fetching_progress}
 				user={this.state.user}
-				albums={this.state.sortedAlbumList}></Albums>
+				albums={this.state.slicedAlbumList}></Albums>
 		);
 	}
 }

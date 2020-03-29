@@ -10,7 +10,7 @@ export default function AlbumsListElement(props) {
 			<div className="row justify-content-center">
 				<div className="col-2 align-self-center">
 					<div className="row justify-content-end mr-1">
-						<h3># {props.rank}</h3>
+						<h3># {props.album.rank}</h3>
 					</div>
 				</div>
 				<div className="col-2">

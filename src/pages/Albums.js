@@ -9,26 +9,6 @@ import Toast from "../components/Toast";
 import "./styles/Albums.css";
 
 export default function Albums(props) {
-	// if (!props.userLoading && !props.albumsLoading) {
-	// 	return (
-	// 		<React.Fragment>
-	// 			<User user={props.user}></User>
-	// 			<br />
-	// 			<AlbumsList albums={props.albums}></AlbumsList>
-	// 		</React.Fragment>
-	// 	);
-	// } else {
-	// 	return (
-	// 		<React.Fragment>
-	//
-	// 			<AlbumsListLoader></AlbumsListLoader>
-	// 			<Toast
-	// 				toastHeader="Generating album list ..."
-	// 				progress={props.progress}></Toast>
-	// 		</React.Fragment>
-	// 	);
-	// }
-
 	return (
 		<React.Fragment>
 			{props.userLoading ? (
