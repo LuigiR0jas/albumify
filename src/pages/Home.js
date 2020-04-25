@@ -3,10 +3,9 @@ import { Link } from "react-router-dom";
 
 import "./styles/Home.css";
 import SpotifyLogoWhite from "../images/Spotify Logo White.png";
-import BackgroundAlbumCollage from "../images/album-background.jpg";
 
 export default class Home extends React.Component {
-	handleClick = e => {
+	handleClick = (e) => {
 		//this.props.history.push("/login");
 	};
 

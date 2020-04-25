@@ -1,7 +1,11 @@
 import React, { Component } from "react";
 
+import SpotifyLogoWhite from "../images/Spotify Logo White.png";
+import collageLogo from "../images/collage logo.png";
+
+import "./styles/AlbumsList.css";
+
 import AlbumsListElement from "./AlbumsListElement";
-import AlbumsListLoader from "./AlbumsListLoader";
 
 export default class AlbumsList extends Component {
 	constructor(props) {
@@ -10,11 +14,11 @@ export default class AlbumsList extends Component {
 		this.state = {
 			page: 1,
 			prevDisabled: true,
-			nextDisabled: false
+			nextDisabled: false,
 		};
 	}
 
-	handlePaginationNext = e => {
+	handlePaginationNext = (e) => {
 		console.log("to top");
 
 		window.scrollTo(0, 0);
@@ -22,13 +26,13 @@ export default class AlbumsList extends Component {
 		if (this.state.page >= 1) {
 			this.setState({
 				page: this.state.page + 1,
-				prevDisabled: false
+				prevDisabled: false,
 			});
 
 			if (this.props.albums.length == this.state.page + 1) {
 				this.setState({
 					page: this.state.page + 1,
-					nextDisabled: true
+					nextDisabled: true,
 				});
 			}
 		} else {
@@ -36,7 +40,7 @@ export default class AlbumsList extends Component {
 		}
 	};
 
-	handlePaginationPrev = e => {
+	handlePaginationPrev = (e) => {
 		console.log("to top");
 
 		window.scrollTo(0, 0);
@@ -44,13 +48,13 @@ export default class AlbumsList extends Component {
 		if (this.state.page == 2) {
 			this.setState({
 				page: this.state.page - 1,
-				prevDisabled: true
+				prevDisabled: true,
 			});
 		} else {
 			if (this.state.page == this.props.albums.length) {
 				this.setState({
 					page: this.state.page - 1,
-					nextDisabled: false
+					nextDisabled: false,
 				});
 			} else {
 				this.setState({ page: this.state.page - 1 });
@@ -67,6 +71,37 @@ export default class AlbumsList extends Component {
 					<div className="row justify-content-center">
 						<h3>These are your favorite albums!</h3>
 					</div>
+					<div className="row justify-content-center">
+						<p className="text-center paddedText">
+							Now you can generate a collage of your favorite
+							albums cover art to share with your friends.
+							{/* Also,
+							we can create a playlist for you full of the songs
+							you like from your albums! */}
+						</p>
+					</div>
+					<div className="row justify-content-center">
+						<button className="btn btn-primary btn-sm mr-2">
+							<img
+								className="btn__logo"
+								src={collageLogo}
+								alt=""
+							/>
+							{"   "}
+							Generate a collage
+						</button>
+
+						{/* <button className="btn btn-primary btn-sm ml-2">
+							<img
+								className="btn__logo"
+								src={SpotifyLogoWhite}
+								alt=""
+							/>
+							{"   "}
+							Create playlist
+						</button> */}
+					</div>
+					<br />
 					<div className="row justify-content-center">
 						<div className="col">
 							<div className="row justify-content-center">
