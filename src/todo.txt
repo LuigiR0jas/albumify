@@ -1,6 +1,10 @@
-- check current code implementation for enhancements (check console and terminal messages)
+- begin integration of react with backend
 
-- fix implementation of layout container
+- log out button
+
+- expired token error handling
+
+- general error handling
 
 - album list element expand to show:
     - number of liked tracks out of how many
@@ -12,12 +16,6 @@
 
 - generate collage
 
-- createplaylist
+- create playlist
 
 - create better similitude mean formula
-
-- log out button
-
-- expired token error handling
-
-- general error handling

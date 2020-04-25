@@ -9,7 +9,11 @@ export default function Layout(props) {
 	return (
 		<React.Fragment>
 			<NavBar></NavBar>
-			<div className={props.wrapperClass}>{props.children}</div>
+			{props.pathname == "/" ? (
+				<div className="home-hero">{props.children}</div>
+			) : (
+				<div className="content-wrap">{props.children}</div>
+			)}
 			<Footer></Footer>
 		</React.Fragment>
 	);

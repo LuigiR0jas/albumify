@@ -2,8 +2,6 @@ import React from "react";
 
 import "./styles/AlbumsListElement.css";
 
-import afterlaughter from "../images/After Laughter.jpg";
-
 export default function AlbumsListElement(props) {
 	return (
 		<div className="container albumlist-element">
