@@ -6,6 +6,7 @@ import collageLogo from "../images/collage logo.png";
 import "./styles/AlbumsList.css";
 
 import AlbumsListElement from "./AlbumsListElement";
+import CollageModal from "./CollageModal";
 
 export default class AlbumsList extends Component {
 	constructor(props) {
@@ -15,6 +16,7 @@ export default class AlbumsList extends Component {
 			page: 1,
 			prevDisabled: true,
 			nextDisabled: false,
+			isOpen: false,
 		};
 	}
 
@@ -62,7 +64,17 @@ export default class AlbumsList extends Component {
 		}
 	};
 
-	componentDidUpdate() {}
+	handleOpenCollageModal = (e) => {
+		this.setState({
+			isOpen: true,
+		});
+	};
+
+	handleCloseCollageModal = (e) => {
+		this.setState({
+			isOpen: false,
+		});
+	};
 
 	render() {
 		return (
@@ -81,7 +93,9 @@ export default class AlbumsList extends Component {
 						</p>
 					</div>
 					<div className="row justify-content-center">
-						<button className="btn btn-primary btn-sm mr-2">
+						<button
+							className="btn btn-primary btn-sm mr-2"
+							onClick={this.handleOpenCollageModal}>
 							<img
 								className="btn__logo"
 								src={collageLogo}
@@ -90,6 +104,12 @@ export default class AlbumsList extends Component {
 							{"   "}
 							Generate a collage
 						</button>
+						<CollageModal
+							images={this.props.albumsCoverArt}
+							isOpen={this.state.isOpen}
+							onClose={
+								this.handleCloseCollageModal
+							}></CollageModal>
 
 						{/* <button className="btn btn-primary btn-sm ml-2">
 							<img
