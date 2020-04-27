@@ -1,24 +1,20 @@
 import React, { Component } from "react";
 
 export default class Canvas extends Component {
-	constructor(props) {
-		super(props);
-
-		this.state = {
-			images: props.images,
-		};
-	}
-
 	componentDidMount() {
-		this.draw();
+		this.props.draw();
 	}
-
-	draw = () => {
-		var ctx = document.getElementById("canvas").getContext("2d");
-		ctx.drawImage(this.state.images[0], 0, 0, 50, 50);
-	};
 
 	render() {
-		return <canvas id="canvas"></canvas>;
+		return (
+			<React.Fragment>
+				<canvas id="canvas" width="300" height="300"></canvas>
+				<canvas
+					id="invisible-canvas"
+					width="900"
+					height="900"
+					style={{ display: "none" }}></canvas>
+			</React.Fragment>
+		);
 	}
 }

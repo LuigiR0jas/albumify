@@ -270,6 +270,7 @@ export default class AlbumsContainer extends Component {
 			if (album.cover !== undefined) {
 				let coverArt = new Image();
 				coverArt.src = album.cover.url;
+				coverArt.crossOrigin = "anonymous";
 				return coverArt;
 			}
 		});

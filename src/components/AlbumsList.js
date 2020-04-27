@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 
-import SpotifyLogoWhite from "../images/Spotify Logo White.png";
 import collageLogo from "../images/collage logo.png";
 
 import "./styles/AlbumsList.css";
@@ -17,6 +16,8 @@ export default class AlbumsList extends Component {
 			prevDisabled: true,
 			nextDisabled: false,
 			isOpen: false,
+			images: props.albumsCoverArt,
+			collageImageURL: "",
 		};
 	}
 
@@ -76,6 +77,38 @@ export default class AlbumsList extends Component {
 		});
 	};
 
+	draw = () => {
+		let canvasContext = document.getElementById("canvas").getContext("2d");
+		let invisibleCanvasContext = document
+			.getElementById("invisible-canvas")
+			.getContext("2d");
+		let invisibleCanvas = document.getElementById("invisible-canvas");
+		let index = 0;
+		for (let i = 0; i < 3; i++) {
+			for (let j = 0; j < 3; j++) {
+				canvasContext.drawImage(
+					this.state.images[index],
+					j * 100,
+					i * 100,
+					100,
+					100
+				);
+				invisibleCanvasContext.drawImage(
+					this.state.images[index],
+					j * 300,
+					i * 300,
+					300,
+					300
+				);
+				index++;
+			}
+		}
+		let imageURL = invisibleCanvas.toDataURL();
+		this.setState({
+			collageImageURL: imageURL,
+		});
+	};
+
 	render() {
 		return (
 			<React.Fragment>
@@ -105,10 +138,11 @@ export default class AlbumsList extends Component {
 							Generate a collage
 						</button>
 						<CollageModal
-							images={this.props.albumsCoverArt}
 							isOpen={this.state.isOpen}
-							onClose={
-								this.handleCloseCollageModal
+							onClose={this.handleCloseCollageModal}
+							draw={this.draw}
+							collageImageURL={
+								this.state.collageImageURL
 							}></CollageModal>
 
 						{/* <button className="btn btn-primary btn-sm ml-2">
