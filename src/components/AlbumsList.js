@@ -18,6 +18,8 @@ export default class AlbumsList extends Component {
 			isOpen: false,
 			images: props.albumsCoverArt,
 			collageImageURL: "",
+			loadedImagesCount: 0,
+			loadingImages: true,
 		};
 	}
 
@@ -77,6 +79,16 @@ export default class AlbumsList extends Component {
 		});
 	};
 
+	triggerDraw = () => {
+		if (this.imagesLoaded()) {
+			this.draw();
+		}
+	};
+
+	imagesLoaded = () => {
+		return this.state.loadedImagesCount == this.state.images.length;
+	};
+
 	draw = () => {
 		let canvasContext = document.getElementById("canvas").getContext("2d");
 		let invisibleCanvasContext = document
@@ -84,6 +96,7 @@ export default class AlbumsList extends Component {
 			.getContext("2d");
 		let invisibleCanvas = document.getElementById("invisible-canvas");
 		let index = 0;
+
 		for (let i = 0; i < 3; i++) {
 			for (let j = 0; j < 3; j++) {
 				canvasContext.drawImage(
@@ -103,11 +116,29 @@ export default class AlbumsList extends Component {
 				index++;
 			}
 		}
-		let imageURL = invisibleCanvas.toDataURL();
+		let imageURL = invisibleCanvas.toDataURL("image/png");
 		this.setState({
 			collageImageURL: imageURL,
 		});
 	};
+
+	componentDidMount() {
+		this.state.images.forEach((image) => {
+			image.onload = () => {
+				this.setState({
+					loadedImagesCount: this.state.loadedImagesCount + 1,
+				});
+				console.log("One image loaded");
+				if (this.imagesLoaded()) {
+					this.setState({ loadingImages: false });
+					console.log("all images loaded");
+					if (document.getElementById("canvas")) {
+						this.draw();
+					}
+				}
+			};
+		});
+	}
 
 	render() {
 		return (
@@ -138,9 +169,10 @@ export default class AlbumsList extends Component {
 							Generate a collage
 						</button>
 						<CollageModal
+							loading={this.state.loadingImages}
 							isOpen={this.state.isOpen}
 							onClose={this.handleCloseCollageModal}
-							draw={this.draw}
+							draw={this.triggerDraw}
 							collageImageURL={
 								this.state.collageImageURL
 							}></CollageModal>

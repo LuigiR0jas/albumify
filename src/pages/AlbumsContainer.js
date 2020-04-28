@@ -266,12 +266,13 @@ export default class AlbumsContainer extends Component {
 	};
 
 	albumCoverArtListPopulate = (sortedAlbumList) => {
-		let albumCoverArtList = sortedAlbumList.map((album) => {
-			if (album.cover !== undefined) {
+		let albumCoverArtList = [];
+		sortedAlbumList.forEach((album, index) => {
+			if (album.cover !== undefined && index < 9) {
 				let coverArt = new Image();
 				coverArt.src = album.cover.url;
 				coverArt.crossOrigin = "anonymous";
-				return coverArt;
+				albumCoverArtList.push(coverArt);
 			}
 		});
 		this.setState({
