@@ -31,7 +31,7 @@ export default class AlbumsContainer extends Component {
 			this.populateAlbumList();
 			this.fetchUser();
 		} else {
-			// this is the function which should be called every time the component mounts
+			// these are the functions which should be called every time the component mounts
 			this.fetchTracks();
 			this.fetchUser();
 		}
@@ -67,11 +67,6 @@ export default class AlbumsContainer extends Component {
 						product: data.product,
 					},
 				});
-				// setTimeout(() => {
-				// 	this.setState({
-				// 		user_loading: false
-				// 	});
-				// }, 5000);
 			})
 			.catch((error) => {
 				console.log(error);
@@ -213,7 +208,7 @@ export default class AlbumsContainer extends Component {
 		let albumList = [];
 
 		for (let track of trackList) {
-			// An album is being defined as a collection of more than 6 tracks
+			// An album is being defined as a collection with or more than 4 tracks
 			if (track.album.total_tracks >= 4) {
 				// Automatically add the first album
 				if (albumList.length == 0) {
@@ -271,18 +266,16 @@ export default class AlbumsContainer extends Component {
 			if (album.cover !== undefined && index < 9) {
 				let coverArt = new Image();
 				coverArt.src = album.cover.url;
-				coverArt.crossOrigin = "anonymous";
+				coverArt.crossOrigin = "Anonymous";
 				albumCoverArtList.push(coverArt);
 			}
 		});
-		this.setState({
-			albumCoverArtList: albumCoverArtList,
-		});
+		this.setState({ albumCoverArtList: albumCoverArtList });
 	};
 
 	albumListSlice = (sortedAlbumList, subArraySize) => {
 		// sortedAlbumList is the array we will slice in chunks
-		// subArraySize is the length each subarray will have
+		// subArraySize is the length each subarray    will have
 
 		let slicedAlbumList = [],
 			auxiliaryArray = [];

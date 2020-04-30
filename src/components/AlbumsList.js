@@ -17,15 +17,14 @@ export default class AlbumsList extends Component {
 			nextDisabled: false,
 			isOpen: false,
 			images: props.albumsCoverArt,
-			collageImageURL: "",
+			collageImageDataURL: "",
+			imgurID: "",
 			loadedImagesCount: 0,
-			loadingImages: true,
+			loadingImageFromImgur: true,
 		};
 	}
 
 	handlePaginationNext = (e) => {
-		console.log("to top");
-
 		window.scrollTo(0, 0);
 
 		if (this.state.page >= 1) {
@@ -46,8 +45,6 @@ export default class AlbumsList extends Component {
 	};
 
 	handlePaginationPrev = (e) => {
-		console.log("to top");
-
 		window.scrollTo(0, 0);
 
 		if (this.state.page == 2) {
@@ -86,26 +83,16 @@ export default class AlbumsList extends Component {
 	};
 
 	imagesLoaded = () => {
-		return this.state.loadedImagesCount == this.state.images.length;
+		return this.state.loadedImagesCount >= this.state.images.length;
 	};
 
 	draw = () => {
-		let canvasContext = document.getElementById("canvas").getContext("2d");
-		let invisibleCanvasContext = document
-			.getElementById("invisible-canvas")
-			.getContext("2d");
 		let invisibleCanvas = document.getElementById("invisible-canvas");
+		let invisibleCanvasContext = invisibleCanvas.getContext("2d");
 		let index = 0;
 
 		for (let i = 0; i < 3; i++) {
 			for (let j = 0; j < 3; j++) {
-				canvasContext.drawImage(
-					this.state.images[index],
-					j * 100,
-					i * 100,
-					100,
-					100
-				);
 				invisibleCanvasContext.drawImage(
 					this.state.images[index],
 					j * 300,
@@ -116,10 +103,35 @@ export default class AlbumsList extends Component {
 				index++;
 			}
 		}
-		let imageURL = invisibleCanvas.toDataURL("image/png");
+		let imageDataURL = invisibleCanvas.toDataURL("image/jpeg");
 		this.setState({
-			collageImageURL: imageURL,
+			collageImageDataURL: imageDataURL,
 		});
+		invisibleCanvas.toBlob((blob) => {
+			this.uploadCollage(blob);
+		}, "image/jpeg");
+	};
+
+	uploadCollage = (collageBlob) => {
+		let formData = new FormData();
+		formData.append("image", collageBlob);
+
+		fetch("https://api.imgur.com/3/image", {
+			method: "POST",
+			headers: {
+				Authorization: "Client-ID 9bd4654a0ee1f87",
+			},
+			body: formData,
+			redirect: "follow",
+		})
+			.then((response) => response.json())
+			.then((response) => {
+				this.setState({
+					imgurID: response.data.id + ".jpg",
+					loadingImageFromImgur: false,
+				});
+			})
+			.catch((error) => console.log(error));
 	};
 
 	componentDidMount() {
@@ -128,11 +140,8 @@ export default class AlbumsList extends Component {
 				this.setState({
 					loadedImagesCount: this.state.loadedImagesCount + 1,
 				});
-				console.log("One image loaded");
 				if (this.imagesLoaded()) {
-					this.setState({ loadingImages: false });
-					console.log("all images loaded");
-					if (document.getElementById("canvas")) {
+					if (document.getElementById("invisibleCanvas")) {
 						this.draw();
 					}
 				}
@@ -169,13 +178,12 @@ export default class AlbumsList extends Component {
 							Generate a collage
 						</button>
 						<CollageModal
-							loading={this.state.loadingImages}
+							loading={this.state.loadingImageFromImgur}
 							isOpen={this.state.isOpen}
 							onClose={this.handleCloseCollageModal}
 							draw={this.triggerDraw}
-							collageImageURL={
-								this.state.collageImageURL
-							}></CollageModal>
+							collageImageURL={this.state.collageImageDataURL}
+							imgurID={this.state.imgurID}></CollageModal>
 
 						{/* <button className="btn btn-primary btn-sm ml-2">
 							<img
