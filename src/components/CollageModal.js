@@ -7,7 +7,10 @@ import "./styles/ShareButtons.css";
 
 export default function CollageModal(props) {
 	return (
-		<Modal isOpen={props.isOpen} onClose={props.onClose}>
+		<Modal
+			isOpen={props.isOpen}
+			onClose={props.onClose}
+			closeButtonID={props.closeButtonID}>
 			<Canvas draw={props.draw} loading={props.loading}></Canvas>
 			<div className="container">
 				<div className="row justify-content-center">

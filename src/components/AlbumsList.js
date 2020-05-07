@@ -1,11 +1,13 @@
 import React, { Component } from "react";
 
 import collageLogo from "../images/collage logo.png";
+import SpotifyLogoWhite from "../images/Spotify Logo White.png";
 
 import "./styles/AlbumsList.css";
 
 import AlbumsListElement from "./AlbumsListElement";
 import CollageModal from "./CollageModal";
+import PlaylistModal from "./PlaylistModal";
 
 export default class AlbumsList extends Component {
 	constructor(props) {
@@ -15,7 +17,8 @@ export default class AlbumsList extends Component {
 			page: 1,
 			prevDisabled: true,
 			nextDisabled: false,
-			isOpen: false,
+			isCollageModalOpen: false,
+			isPlaylistModalOpen: false,
 			images: props.albumsCoverArt,
 			collageImageDataURL: "",
 			imgurID: "",
@@ -64,16 +67,34 @@ export default class AlbumsList extends Component {
 		}
 	};
 
-	handleOpenCollageModal = (e) => {
-		this.setState({
-			isOpen: true,
-		});
+	handleOpenModal = (e) => {
+		console.log(e.target.id);
+
+		switch (e.target.id) {
+			case "OpenCollageModalButton":
+				this.setState({ isCollageModalOpen: true });
+				break;
+			case "OpenPlaylistModalButton":
+				this.setState({ isPlaylistModalOpen: true });
+				break;
+			default:
+				break;
+		}
 	};
 
-	handleCloseCollageModal = (e) => {
-		this.setState({
-			isOpen: false,
-		});
+	handleCloseModal = (e) => {
+		console.log(e.target.id);
+
+		switch (e.target.id) {
+			case "CloseCollageModalButton":
+				this.setState({ isCollageModalOpen: false });
+				break;
+			case "ClosePlaylistModalButton":
+				this.setState({ isPlaylistModalOpen: false });
+				break;
+			default:
+				break;
+		}
 	};
 
 	triggerDraw = () => {
@@ -159,16 +180,16 @@ export default class AlbumsList extends Component {
 					<div className="row justify-content-center">
 						<p className="text-center paddedText">
 							Now you can generate a collage of your favorite
-							albums cover art to share with your friends.
-							{/* Also,
+							albums cover art to share with your friends. Also,
 							we can create a playlist for you full of the songs
-							you like from your albums! */}
+							you like from your albums!
 						</p>
 					</div>
 					<div className="row justify-content-center">
 						<button
+							id="OpenCollageModalButton"
 							className="btn btn-primary btn-sm mr-2"
-							onClick={this.handleOpenCollageModal}>
+							onClick={this.handleOpenModal}>
 							<img
 								className="btn__logo"
 								src={collageLogo}
@@ -179,13 +200,17 @@ export default class AlbumsList extends Component {
 						</button>
 						<CollageModal
 							loading={this.state.loadingImageFromImgur}
-							isOpen={this.state.isOpen}
-							onClose={this.handleCloseCollageModal}
+							isOpen={this.state.isCollageModalOpen}
+							onClose={this.handleCloseModal}
+							closeButtonID="CloseCollageModalButton"
 							draw={this.triggerDraw}
 							collageImageURL={this.state.collageImageDataURL}
 							imgurID={this.state.imgurID}></CollageModal>
 
-						{/* <button className="btn btn-primary btn-sm ml-2">
+						<button
+							id="OpenPlaylistModalButton"
+							className="btn btn-primary btn-sm ml-2"
+							onClick={this.handleOpenModal}>
 							<img
 								className="btn__logo"
 								src={SpotifyLogoWhite}
@@ -193,7 +218,11 @@ export default class AlbumsList extends Component {
 							/>
 							{"   "}
 							Create playlist
-						</button> */}
+						</button>
+						<PlaylistModal
+							isOpen={this.state.isPlaylistModalOpen}
+							onClose={this.handleCloseModal}
+							closeButtonID="ClosePlaylistModalButton"></PlaylistModal>
 					</div>
 					<br />
 					<div className="row justify-content-center">

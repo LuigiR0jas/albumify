@@ -13,9 +13,7 @@
 - album list element add links to:
     - artist spotify page
     - album spotify page
-
-- generate collage
-
+    
 - create playlist
 
 - create better similitude mean formula

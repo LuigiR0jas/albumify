@@ -9,6 +9,7 @@ export default function Modal(props) {
 			<div className="Modal">
 				<div className="Modal__container">
 					<button
+						id={props.closeButtonID}
 						onClick={props.onClose}
 						className="Modal__close-button">
 						x
