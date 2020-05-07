@@ -310,7 +310,8 @@ export default class AlbumsContainer extends Component {
 				progress={this.state.fetching_progress}
 				user={this.state.user}
 				albums={this.state.slicedAlbumList}
-				albumsCoverArt={this.state.albumCoverArtList}></Albums>
+				albumsCoverArt={this.state.albumCoverArtList}
+				access_token={this.state.access_token}></Albums>
 		);
 	}
 }

@@ -29,7 +29,9 @@ export default function Albums(props) {
 			) : (
 				<AlbumsList
 					albums={props.albums}
-					albumsCoverArt={props.albumsCoverArt}></AlbumsList>
+					albumsCoverArt={props.albumsCoverArt}
+					user={props.user}
+					access_token={props.access_token}></AlbumsList>
 			)}
 		</React.Fragment>
 	);

@@ -14,7 +14,7 @@
 .Modal__container {
 	position: relative;
 	top: 5rem;
-	background-color: #595b5e;
+	background-color: rgb(44, 44, 44);
 	padding: 1rem;
 	width: 400px;
 	border-radius: 0.25rem;
@@ -26,7 +26,7 @@
 	right: 0;
 	border: 0;
 	color: white;
-	background-color: #505053;
+	background-color: rgb(34, 34, 34);
 	padding: 0.5rem 1rem;
 	border-top-right-radius: 0.25rem;
 }

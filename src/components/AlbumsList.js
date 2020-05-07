@@ -7,7 +7,7 @@ import "./styles/AlbumsList.css";
 
 import AlbumsListElement from "./AlbumsListElement";
 import CollageModal from "./CollageModal";
-import PlaylistModal from "./PlaylistModal";
+import PlaylistModalContainer from "./PlaylistModalContainer";
 
 export default class AlbumsList extends Component {
 	constructor(props) {
@@ -90,6 +90,9 @@ export default class AlbumsList extends Component {
 				this.setState({ isCollageModalOpen: false });
 				break;
 			case "ClosePlaylistModalButton":
+				this.setState({ isPlaylistModalOpen: false });
+				break;
+			case "CancelPlaylistCreationButton":
 				this.setState({ isPlaylistModalOpen: false });
 				break;
 			default:
@@ -219,10 +222,14 @@ export default class AlbumsList extends Component {
 							{"   "}
 							Create playlist
 						</button>
-						<PlaylistModal
+						<PlaylistModalContainer
 							isOpen={this.state.isPlaylistModalOpen}
 							onClose={this.handleCloseModal}
-							closeButtonID="ClosePlaylistModalButton"></PlaylistModal>
+							closeButtonID="ClosePlaylistModalButton"
+							user={this.props.user}
+							access_token={
+								this.props.access_token
+							}></PlaylistModalContainer>
 					</div>
 					<br />
 					<div className="row justify-content-center">

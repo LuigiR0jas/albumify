@@ -1,10 +1,17 @@
-- begin integration of react with backend
+- create playlist
+
+- begin integration of react with the backend
+
+- Better Scaffolding
 
 - log out button
 
 - expired token error handling
 
 - general error handling
+
+
+
 
 - album list element expand to show:
     - number of liked tracks out of how many
@@ -13,7 +20,6 @@
 - album list element add links to:
     - artist spotify page
     - album spotify page
-    
-- create playlist
 
 - create better similitude mean formula
+
