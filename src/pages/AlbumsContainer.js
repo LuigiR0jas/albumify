@@ -19,8 +19,9 @@ export default class AlbumsContainer extends Component {
 			fetching_progress: "",
 			trackList: [],
 			albumList: [],
+			albumCoverArtList: [],
 			sortedAlbumList: [],
-			slicedAlbumList: []
+			slicedAlbumList: [],
 		};
 	}
 
@@ -30,14 +31,14 @@ export default class AlbumsContainer extends Component {
 			this.populateAlbumList();
 			this.fetchUser();
 		} else {
-			// this is the function which should be called every time the component mounts
+			// these are the functions which should be called every time the component mounts
 			this.fetchTracks();
 			this.fetchUser();
 		}
 	}
 
 	// Fetch error handler
-	handleErrors = response => {
+	handleErrors = (response) => {
 		if (!response.ok) {
 			throw Error(response.statusText);
 		}
@@ -47,14 +48,14 @@ export default class AlbumsContainer extends Component {
 	fetchUser = () => {
 		fetch("https://api.spotify.com/v1/me", {
 			headers: {
-				Authorization: "Bearer " + this.state.access_token
-			}
+				Authorization: "Bearer " + this.state.access_token,
+			},
 		})
 			.then(this.handleErrors)
-			.then(response => {
+			.then((response) => {
 				return response.json();
 			})
-			.then(data => {
+			.then((data) => {
 				this.setState({
 					user_loading: false,
 					user: {
@@ -63,16 +64,11 @@ export default class AlbumsContainer extends Component {
 						email: data.email,
 						href: data.href,
 						id: data.id,
-						product: data.product
-					}
+						product: data.product,
+					},
 				});
-				// setTimeout(() => {
-				// 	this.setState({
-				// 		user_loading: false
-				// 	});
-				// }, 5000);
 			})
-			.catch(error => {
+			.catch((error) => {
 				console.log(error);
 			});
 	};
@@ -87,14 +83,14 @@ export default class AlbumsContainer extends Component {
 
 		fetch(url, {
 			headers: {
-				Authorization: "Bearer " + this.state.access_token
-			}
+				Authorization: "Bearer " + this.state.access_token,
+			},
 		})
 			.then(this.handleErrors)
-			.then(response => {
+			.then((response) => {
 				return response.json();
 			})
-			.then(data => {
+			.then((data) => {
 				// populate tracklist
 				for (let object of data.items) {
 					let track = object.track;
@@ -106,7 +102,7 @@ export default class AlbumsContainer extends Component {
 						uri: track.uri,
 						url: track.external_urls.spotify,
 						href: track.href,
-						preview_url: track.preview_url
+						preview_url: track.preview_url,
 					});
 				}
 				this.calculateFetchingProgress(trackList.length, data.total);
@@ -116,7 +112,7 @@ export default class AlbumsContainer extends Component {
 					this.fetchTracks(trackList, data.next);
 				} else {
 					this.setState({
-						trackList: trackList
+						trackList: trackList,
 					});
 					// lets save the list on local storage for testing purposes
 					localStorage.setItem(
@@ -126,7 +122,7 @@ export default class AlbumsContainer extends Component {
 					this.populateAlbumList();
 				}
 			})
-			.catch(error => {
+			.catch((error) => {
 				// error handling
 				console.log(error);
 			});
@@ -135,7 +131,7 @@ export default class AlbumsContainer extends Component {
 	calculateFetchingProgress = (current, total) => {
 		let progress = Math.round((current / total) * 100);
 		this.setState({
-			fetching_progress: progress
+			fetching_progress: progress,
 		});
 	};
 
@@ -143,7 +139,7 @@ export default class AlbumsContainer extends Component {
 		return Math.round((likes / totalTracks) * 10000) / 10000;
 	};
 
-	getScore = ratio => {
+	getScore = (ratio) => {
 		let score = "☆☆☆☆☆";
 		if (ratio >= 0.2) {
 			score = "⭐☆☆☆☆";
@@ -169,7 +165,7 @@ export default class AlbumsContainer extends Component {
 
 		return {
 			ratio: ratio,
-			score: score
+			score: score,
 		};
 	};
 
@@ -188,7 +184,7 @@ export default class AlbumsContainer extends Component {
 			likedTracks: [track],
 			likes: 1,
 			totalTracks: track.album.total_tracks,
-			metrics: this.calculateMetrics(1, track.album.total_tracks)
+			metrics: this.calculateMetrics(1, track.album.total_tracks),
 		});
 
 		return albumList;
@@ -212,7 +208,7 @@ export default class AlbumsContainer extends Component {
 		let albumList = [];
 
 		for (let track of trackList) {
-			// An album is being defined as a collection of more than 6 tracks
+			// An album is being defined as a collection with or more than 4 tracks
 			if (track.album.total_tracks >= 4) {
 				// Automatically add the first album
 				if (albumList.length == 0) {
@@ -240,13 +236,13 @@ export default class AlbumsContainer extends Component {
 			}
 		}
 		this.setState({
-			albumList: albumList
+			albumList: albumList,
 		});
 		this.albumListSort(albumList);
 	};
 
-	albumListSort = albumList => {
-		let sortedAlbumList = albumList.sort(function(a, b) {
+	albumListSort = (albumList) => {
+		let sortedAlbumList = albumList.sort(function (a, b) {
 			if (a.metrics.ratio < b.metrics.ratio) {
 				return 1;
 			}
@@ -257,12 +253,27 @@ export default class AlbumsContainer extends Component {
 		});
 
 		this.setState({
-			sortedAlbumList: sortedAlbumList
+			sortedAlbumList: sortedAlbumList,
 		});
-		this.albumListSlice(sortedAlbumList, 20);
+		console.log(sortedAlbumList);
+		this.albumCoverArtListPopulate(sortedAlbumList);
+		this.sliceArrayInChunks(sortedAlbumList, 20);
 	};
 
-	albumListSlice = (sortedAlbumList, subArraySize) => {
+	albumCoverArtListPopulate = (sortedAlbumList) => {
+		let albumCoverArtList = [];
+		sortedAlbumList.forEach((album, index) => {
+			if (album.cover !== undefined && index < 9) {
+				let coverArt = new Image();
+				coverArt.src = album.cover.url;
+				coverArt.crossOrigin = "Anonymous";
+				albumCoverArtList.push(coverArt);
+			}
+		});
+		this.setState({ albumCoverArtList: albumCoverArtList });
+	};
+
+	sliceArrayInChunks = (sortedAlbumList, subArraySize) => {
 		// sortedAlbumList is the array we will slice in chunks
 		// subArraySize is the length each subarray will have
 
@@ -287,7 +298,7 @@ export default class AlbumsContainer extends Component {
 
 		this.setState({
 			albums_loading: false,
-			slicedAlbumList: slicedAlbumList
+			slicedAlbumList: slicedAlbumList,
 		});
 	};
 
@@ -298,7 +309,9 @@ export default class AlbumsContainer extends Component {
 				albumsLoading={this.state.albums_loading}
 				progress={this.state.fetching_progress}
 				user={this.state.user}
-				albums={this.state.slicedAlbumList}></Albums>
+				albums={this.state.slicedAlbumList}
+				albumsCoverArt={this.state.albumCoverArtList}
+				access_token={this.state.access_token}></Albums>
 		);
 	}
 }

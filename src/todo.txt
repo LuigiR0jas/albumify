@@ -1,11 +1,24 @@
-- begin integration of react with backend
+- Import Gulp version pump script
 
-- log out button
+- Better Scaffolding
 
-- expired token error handling
+- Modularize functions 
+
+- support diferent case senarios of number of albums
 
 - general error handling
 
+- begin integration of react with the backend
+
+- expired token error handling
+
+- log out button
+
+
+
+
+
+BACKLOG:
 - album list element expand to show:
     - number of liked tracks out of how many
     - list of like tracks
@@ -14,8 +27,5 @@
     - artist spotify page
     - album spotify page
 
-- generate collage
-
-- create playlist
-
 - create better similitude mean formula
+

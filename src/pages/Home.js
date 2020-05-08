@@ -3,10 +3,9 @@ import { Link } from "react-router-dom";
 
 import "./styles/Home.css";
 import SpotifyLogoWhite from "../images/Spotify Logo White.png";
-import BackgroundAlbumCollage from "../images/album-background.jpg";
 
 export default class Home extends React.Component {
-	handleClick = e => {
+	handleClick = (e) => {
 		//this.props.history.push("/login");
 	};
 
@@ -18,10 +17,12 @@ export default class Home extends React.Component {
 				<br />
 				<br />
 				<div className="row justify-content-center">
-					<h1>Discover and share your favorite albums!</h1>
+					<h1 className="textShadow">
+						Discover and share your favorite albums!
+					</h1>
 				</div>
 				<div className="row justify-content-center">
-					<p>
+					<p className="textShadow">
 						Get a list of your favorite albums acording to our
 						algorithm, and generate a collage or a playlist to share
 						with your friends!

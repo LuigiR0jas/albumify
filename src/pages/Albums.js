@@ -27,7 +27,11 @@ export default function Albums(props) {
 						progress={props.progress}></Toast>
 				</React.Fragment>
 			) : (
-				<AlbumsList albums={props.albums}></AlbumsList>
+				<AlbumsList
+					albums={props.albums}
+					albumsCoverArt={props.albumsCoverArt}
+					user={props.user}
+					access_token={props.access_token}></AlbumsList>
 			)}
 		</React.Fragment>
 	);
