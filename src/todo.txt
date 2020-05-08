@@ -1,12 +1,10 @@
-- create playlist
-
-- begin integration of react with the backend
-
 - Better Scaffolding
 
 - support diferent case senarios of number of albums
 
 - Modularize functions 
+
+- begin integration of react with the backend
 
 - log out button
 
@@ -16,6 +14,7 @@
 
 
 
+BACKLOG:
 
 - album list element expand to show:
     - number of liked tracks out of how many
