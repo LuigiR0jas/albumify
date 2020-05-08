@@ -79,6 +79,7 @@ export default function PlaylistModal(props) {
 						</div>
 					</div>
 				)}
+				<br />
 			</div>
 		</Modal>
 	);

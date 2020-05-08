@@ -1,22 +1,22 @@
-- create playlist
-
-- begin integration of react with the backend
-
 - Better Scaffolding
-
-- support diferent case senarios of number of albums
 
 - Modularize functions 
 
-- log out button
-
-- expired token error handling
+- support diferent case senarios of number of albums
 
 - general error handling
 
+- begin integration of react with the backend
+
+- expired token error handling
+
+- log out button
 
 
 
+
+
+BACKLOG:
 - album list element expand to show:
     - number of liked tracks out of how many
     - list of like tracks
