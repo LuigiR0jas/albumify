@@ -4,6 +4,10 @@
 
 - Better Scaffolding
 
+- support diferent case senarios of number of albums
+
+- Modularize functions 
+
 - log out button
 
 - expired token error handling

@@ -68,8 +68,6 @@ export default class AlbumsList extends Component {
 	};
 
 	handleOpenModal = (e) => {
-		console.log(e.target.id);
-
 		switch (e.target.id) {
 			case "OpenCollageModalButton":
 				this.setState({ isCollageModalOpen: true });
@@ -83,8 +81,6 @@ export default class AlbumsList extends Component {
 	};
 
 	handleCloseModal = (e) => {
-		console.log(e.target.id);
-
 		switch (e.target.id) {
 			case "CloseCollageModalButton":
 				this.setState({ isCollageModalOpen: false });
@@ -227,6 +223,7 @@ export default class AlbumsList extends Component {
 							onClose={this.handleCloseModal}
 							closeButtonID="ClosePlaylistModalButton"
 							user={this.props.user}
+							albums={this.props.albums}
 							access_token={
 								this.props.access_token
 							}></PlaylistModalContainer>

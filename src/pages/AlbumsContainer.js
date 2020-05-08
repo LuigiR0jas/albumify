@@ -257,7 +257,7 @@ export default class AlbumsContainer extends Component {
 		});
 		console.log(sortedAlbumList);
 		this.albumCoverArtListPopulate(sortedAlbumList);
-		this.albumListSlice(sortedAlbumList, 20);
+		this.sliceArrayInChunks(sortedAlbumList, 20);
 	};
 
 	albumCoverArtListPopulate = (sortedAlbumList) => {
@@ -273,9 +273,9 @@ export default class AlbumsContainer extends Component {
 		this.setState({ albumCoverArtList: albumCoverArtList });
 	};
 
-	albumListSlice = (sortedAlbumList, subArraySize) => {
+	sliceArrayInChunks = (sortedAlbumList, subArraySize) => {
 		// sortedAlbumList is the array we will slice in chunks
-		// subArraySize is the length each subarray    will have
+		// subArraySize is the length each subarray will have
 
 		let slicedAlbumList = [],
 			auxiliaryArray = [];

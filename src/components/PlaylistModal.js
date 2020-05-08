@@ -22,10 +22,12 @@ export default function PlaylistModal(props) {
 								Name
 							</label>
 							<input
+								maxLength="100"
 								className="form-control"
 								id="FormPlaylistName"
 								aria-describedby="Name"
-								defaultValue="My Top 10 Albums"
+								value={props.playlistNameValue}
+								onChange={props.handleChange}
 								readOnly={props.readOnly}
 							/>
 						</div>
@@ -34,10 +36,12 @@ export default function PlaylistModal(props) {
 								Description
 							</label>
 							<textarea
+								maxLength="300"
 								className="form-control"
 								id="FormPlaylistDescription"
 								rows="4"
-								defaultValue="A playlist with my favorite songs of my top 10 albums of all time! Created with Albumify."
+								value={props.playlistDescriptionValue}
+								onChange={props.handleChange}
 								readOnly={props.readOnly}></textarea>
 						</div>
 					</form>
@@ -51,11 +55,9 @@ export default function PlaylistModal(props) {
 					</div>
 				) : props.playlistCreated ? (
 					<div className="row justify-content-center">
-						<button
-							className="btn btn-primary"
-							href={props.playlistURL}>
+						<a className="btn btn-primary" href={props.playlistURL}>
 							Go to Playlist
-						</button>
+						</a>
 					</div>
 				) : (
 					<div className="row justify-content-center">
@@ -70,7 +72,8 @@ export default function PlaylistModal(props) {
 						<div className="col-4">
 							<button
 								className="btn btn-primary"
-								onClick={props.onCreate}>
+								onClick={props.onCreate}
+								disabled={props.disabled}>
 								Create
 							</button>
 						</div>
