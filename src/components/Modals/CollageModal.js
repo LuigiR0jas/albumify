@@ -1,7 +1,7 @@
 import React from "react";
 
 import Modal from "./Modal";
-import Canvas from "./Canvas";
+import Canvas from "../Canvas/Canvas";
 
 import "./styles/ShareButtons.css";
 

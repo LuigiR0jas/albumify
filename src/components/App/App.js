@@ -1,12 +1,12 @@
-import React, { Component } from "react";
-import { BrowserRouter, Switch, Route, useLocation } from "react-router-dom";
+import React from "react";
+import { Switch, Route, useLocation } from "react-router-dom";
 
 import "./styles/App.css";
 
-import Layout from "./Layout";
-import Home from "../pages/Home";
-import AlbumsContainer from "../pages/AlbumsContainer";
-import NotFound from "../pages/NotFound";
+import Layout from "../Layout/Layout";
+import Home from "../../pages/Home/Home";
+import AlbumsContainer from "../../pages/Albums/AlbumsContainer";
+import NotFound from "../../pages/NotFound/NotFound";
 
 function App(props) {
 	let path = useLocation().pathname;

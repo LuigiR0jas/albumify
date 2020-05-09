@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import "./styles/Home.css";
-import SpotifyLogoWhite from "../images/Spotify Logo White.png";
+import SpotifyLogoWhite from "../../images/Spotify Logo White.png";
 
 export default class Home extends React.Component {
 	handleClick = (e) => {

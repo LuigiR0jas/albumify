@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 
-import collageLogo from "../images/collage logo.png";
-import SpotifyLogoWhite from "../images/Spotify Logo White.png";
+import collageLogo from "../../images/collage logo.png";
+import SpotifyLogoWhite from "../../images/Spotify Logo White.png";
 
 import "./styles/AlbumsList.css";
 
 import AlbumsListElement from "./AlbumsListElement";
-import CollageModal from "./CollageModal";
-import PlaylistModalContainer from "./PlaylistModalContainer";
+import CollageModal from "../Modals/CollageModal";
+import PlaylistModalContainer from "../Modals/PlaylistModalContainer";
 
 export default class AlbumsList extends Component {
 	constructor(props) {

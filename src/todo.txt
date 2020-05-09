@@ -1,5 +1,3 @@
-- Import Gulp version pump script
-
 - Better Scaffolding
 
 - Modularize functions 

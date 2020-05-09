@@ -255,7 +255,7 @@ export default class AlbumsContainer extends Component {
 		this.setState({
 			sortedAlbumList: sortedAlbumList,
 		});
-		console.log(sortedAlbumList);
+
 		this.albumCoverArtListPopulate(sortedAlbumList);
 		this.sliceArrayInChunks(sortedAlbumList, 20);
 	};

@@ -2,7 +2,7 @@ import React from "react";
 
 import "./styles/Toast.css";
 
-import Progress from "./Progress";
+import Progress from "../Progress/Progress";
 
 export default function Toast(props) {
 	return (
