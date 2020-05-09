@@ -26,15 +26,8 @@ export default class AlbumsContainer extends Component {
 	}
 
 	componentDidMount() {
-		// lets analyze a tracklist saved on the localstorage testing purposes
-		if (localStorage.getItem("tracklist") !== null) {
-			this.populateAlbumList();
-			this.fetchUser();
-		} else {
-			// these are the functions which should be called every time the component mounts
-			this.fetchTracks();
-			this.fetchUser();
-		}
+		this.fetchTracks();
+		this.fetchUser();
 	}
 
 	// Fetch error handler
@@ -74,13 +67,10 @@ export default class AlbumsContainer extends Component {
 	};
 
 	// Fetch user liked tracks from Spotify API
-	fetchTracks = (trackList = [], next = undefined) => {
-		let url;
-
-		next == undefined
-			? (url = "https://api.spotify.com/v1/me/tracks?limit=50")
-			: (url = next);
-
+	fetchTracks = (
+		trackList = [],
+		url = "https://api.spotify.com/v1/me/tracks?limit=50"
+	) => {
 		fetch(url, {
 			headers: {
 				Authorization: "Bearer " + this.state.access_token,
@@ -107,19 +97,14 @@ export default class AlbumsContainer extends Component {
 				}
 				this.calculateFetchingProgress(trackList.length, data.total);
 
-				if (data.next !== null) {
+				if (data.next) {
 					// If there are songs left, call the function again with the next url
 					this.fetchTracks(trackList, data.next);
 				} else {
+					this.populateAlbumList(trackList);
 					this.setState({
 						trackList: trackList,
 					});
-					// lets save the list on local storage for testing purposes
-					localStorage.setItem(
-						"tracklist",
-						JSON.stringify(trackList)
-					);
-					this.populateAlbumList();
 				}
 			})
 			.catch((error) => {
@@ -201,24 +186,21 @@ export default class AlbumsContainer extends Component {
 		return albumListItem;
 	};
 
-	populateAlbumList = (trackList = []) => {
-		// Get trackList from localstorage for testing purposes
-		trackList = JSON.parse(localStorage.getItem("tracklist"));
-
+	populateAlbumList = (trackList) => {
+		// An album is being defined as a collection with or more than 4 tracks
+		let albumLength = 4;
 		let albumList = [];
 
 		for (let track of trackList) {
-			// An album is being defined as a collection with or more than 4 tracks
-			if (track.album.total_tracks >= 4) {
+			if (track.album.total_tracks >= albumLength) {
 				// Automatically add the first album
+				// With the first album added, start traversing the album list array to update or add new entries
+				// If there's a hit, let's update the entry
 				if (albumList.length == 0) {
 					albumList = this.addAlbum(albumList, track);
 				} else {
-					// With the first album added, start traversing the album list array to update or add new entries
 					for (let i = 0; i < albumList.length; i++) {
-						// If there's a hit, let's update the entry
 						if (albumList[i].name == track.album.name) {
-							// Add the liked track to the list, bump the "likes" count and adjust ratio
 							albumList[i] = this.updateAlbum(
 								albumList[i],
 								track
@@ -226,8 +208,8 @@ export default class AlbumsContainer extends Component {
 							break;
 						}
 						// If by the end of the array there's no hits, the album has not been added before
+						// So let's add it
 						if (i == albumList.length - 1) {
-							// So let's add it
 							albumList = this.addAlbum(albumList, track);
 							break;
 						}
