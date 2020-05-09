@@ -27,6 +27,16 @@ export default class AlbumsList extends Component {
 		};
 	}
 
+	listElements = () => {
+		return this.props.albums[this.state.page - 1].map((album) => {
+			return (
+				<AlbumsListElement
+					key={album.id}
+					album={album}></AlbumsListElement>
+			);
+		});
+	};
+
 	handlePaginationNext = (e) => {
 		window.scrollTo(0, 0);
 
@@ -251,15 +261,7 @@ export default class AlbumsList extends Component {
 							</div>
 						</div>
 					</div>
-					{this.props.albums[this.state.page - 1].map(
-						(album, index) => {
-							return (
-								<AlbumsListElement
-									key={album.id}
-									album={album}></AlbumsListElement>
-							);
-						}
-					)}
+					{this.listElements()}
 
 					<br />
 					<br />

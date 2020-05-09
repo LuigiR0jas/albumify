@@ -175,12 +175,12 @@ export default class AlbumsContainer extends Component {
 		year = releaseDate.getFullYear();
 
 		albumList.push({
+			id: track.album.id,
 			name: track.album.name,
 			releaseDate: track.album.release_date,
 			year: year,
 			artists: track.album.artists,
 			cover: track.album.images[1],
-			albumObject: track.album,
 			likedTracks: [track],
 			likes: 1,
 			totalTracks: track.album.total_tracks,
@@ -217,7 +217,7 @@ export default class AlbumsContainer extends Component {
 					// With the first album added, start traversing the album list array to update or add new entries
 					for (let i = 0; i < albumList.length; i++) {
 						// If there's a hit, let's update the entry
-						if (albumList[i].albumObject.name == track.album.name) {
+						if (albumList[i].name == track.album.name) {
 							// Add the liked track to the list, bump the "likes" count and adjust ratio
 							albumList[i] = this.updateAlbum(
 								albumList[i],

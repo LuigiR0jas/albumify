@@ -1,5 +1,3 @@
-- Better Scaffolding
-
 - Modularize functions 
 
 - support diferent case senarios of number of albums
