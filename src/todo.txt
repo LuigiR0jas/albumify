@@ -1,21 +1,12 @@
-- Import Gulp version pump script
-
-- Better Scaffolding
-
 - Modularize functions 
 
 - support diferent case senarios of number of albums
 
 - general error handling
 
-- begin integration of react with the backend
-
 - expired token error handling
 
-- log out button
-
-
-
+- Make AlbumContainer logic less complex, modularize funtions
 
 
 BACKLOG:

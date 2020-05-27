@@ -1,13 +1,15 @@
 import React, { Component } from "react";
 
-import collageLogo from "../images/collage logo.png";
-import SpotifyLogoWhite from "../images/Spotify Logo White.png";
+import config from "../../config";
+
+import collageLogo from "../../images/collage logo.png";
+import SpotifyLogoWhite from "../../images/Spotify Logo White.png";
 
 import "./styles/AlbumsList.css";
 
 import AlbumsListElement from "./AlbumsListElement";
-import CollageModal from "./CollageModal";
-import PlaylistModalContainer from "./PlaylistModalContainer";
+import CollageModal from "../Modals/CollageModal";
+import PlaylistModalContainer from "../Modals/PlaylistModalContainer";
 
 export default class AlbumsList extends Component {
 	constructor(props) {
@@ -26,6 +28,16 @@ export default class AlbumsList extends Component {
 			loadingImageFromImgur: true,
 		};
 	}
+
+	listElements = () => {
+		return this.props.albums[this.state.page - 1].map((album) => {
+			return (
+				<AlbumsListElement
+					key={album.id}
+					album={album}></AlbumsListElement>
+			);
+		});
+	};
 
 	handlePaginationNext = (e) => {
 		window.scrollTo(0, 0);
@@ -139,7 +151,7 @@ export default class AlbumsList extends Component {
 		fetch("https://api.imgur.com/3/image", {
 			method: "POST",
 			headers: {
-				Authorization: "Client-ID 9bd4654a0ee1f87",
+				Authorization: config.imgur_client_id,
 			},
 			body: formData,
 			redirect: "follow",
@@ -251,15 +263,8 @@ export default class AlbumsList extends Component {
 							</div>
 						</div>
 					</div>
-					{this.props.albums[this.state.page - 1].map(
-						(album, index) => {
-							return (
-								<AlbumsListElement
-									key={album.id}
-									album={album}></AlbumsListElement>
-							);
-						}
-					)}
+
+					{this.listElements()}
 
 					<br />
 					<br />

@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import "./styles/NavBar.css";
-import SpotifyLogo from "../images/Spotify Logo.png";
+import SpotifyLogo from "../../images/Spotify Logo.png";
 
 export default function NavBar() {
 	return (

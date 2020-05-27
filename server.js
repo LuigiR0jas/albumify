@@ -1,22 +1,23 @@
 /**
- * This is an example of a basic node.js script that performs
+ * This is a basic node.js script that performs
  * the Authorization Code oAuth2 flow to authenticate against
  * the Spotify Accounts.
- *
- * For more information, read
- * https://developer.spotify.com/web-api/authorization-guide/#authorization_code_flow
  */
 
-var express = require("express"); // Express web server framework
-var request = require("request"); // "Request" library
+var express = require("express");
+var request = require("request");
 var cors = require("cors");
 var querystring = require("querystring");
 var cookieParser = require("cookie-parser");
-var config = require("./config.json");
+var config = require("./src/config.json");
+var os = require("os");
+var port = process.env.PORT || 8888;
 
-var client_id = config.client_id; // Your client id
-var client_secret = config.client_secret; // Your secret
-var redirect_uri = config.redirect_uri; // Your redirect uri
+var client_id = config.client_id;
+var client_secret = config.client_secret;
+var redirect_uri = process.env.NODE_ENV
+	? config.prod_redirect_uri
+	: config.dev_redirect_uri;
 
 /**
  * Generates a random string containing numbers and letters
@@ -38,7 +39,7 @@ var stateKey = "spotify_auth_state";
 
 var app = express();
 
-app.use(express.static(__dirname + "/public"))
+app.use(express.static(__dirname + "/build"))
 	.use(cors())
 	.use(cookieParser());
 
@@ -46,7 +47,7 @@ app.get("/login", function (req, res) {
 	var state = generateRandomString(16);
 	res.cookie(stateKey, state);
 
-	// your application requests authorization
+	// application requests authorization
 	var scope =
 		"user-read-private user-read-email user-read-recently-played user-top-read user-library-read playlist-read-private playlist-read-collaborative playlist-modify-public playlist-modify-private";
 	res.redirect(
@@ -57,12 +58,13 @@ app.get("/login", function (req, res) {
 				scope: scope,
 				redirect_uri: redirect_uri,
 				state: state,
+				show_dialog: true,
 			})
 	);
 });
 
 app.get("/callback", function (req, res) {
-	// your application requests refresh and access tokens
+	// application requests refresh and access tokens
 	// after checking the state parameter
 
 	var code = req.query.code || null;
@@ -71,7 +73,7 @@ app.get("/callback", function (req, res) {
 
 	if (state === null || state !== storedState) {
 		res.redirect(
-			"http://localhost:3000/404" +
+			"/404" +
 				querystring.stringify({
 					error: "state_mismatch",
 				})
@@ -113,7 +115,7 @@ app.get("/callback", function (req, res) {
 
 				// we can also pass the token to the browser to make requests from there
 				res.redirect(
-					"http://localhost:3000/albums?" +
+					"/albums?" +
 						querystring.stringify({
 							access_token: access_token,
 							refresh_token: refresh_token,
@@ -121,7 +123,7 @@ app.get("/callback", function (req, res) {
 				);
 			} else {
 				res.redirect(
-					"http://localhost:3000/404" +
+					"/404" +
 						querystring.stringify({
 							error: "invalid_token",
 						})
@@ -158,5 +160,10 @@ app.get("/refresh_token", function (req, res) {
 	});
 });
 
-console.log("Listening on 8888");
-app.listen(8888);
+// Let react-router manage the routes
+app.get("*", (req, res) => {
+	res.sendFile(__dirname + "/build/index.html");
+});
+
+app.listen(port);
+console.log("Listening on ", port);

@@ -1,12 +1,10 @@
 import React from "react";
 
-import User from "../components/User";
-import UserLoader from "../components/UserLoader";
-import AlbumsList from "../components/AlbumsList";
-import AlbumsListLoader from "../components/AlbumsListLoader";
-import Toast from "../components/Toast";
-
-import "./styles/Albums.css";
+import User from "../../components/User/User";
+import UserLoader from "../../components/User/UserLoader";
+import AlbumsList from "../../components/Albums/AlbumsList";
+import AlbumsListLoader from "../../components/Albums/AlbumsListLoader";
+import Toast from "../../components/Toast/Toast";
 
 export default function Albums(props) {
 	return (

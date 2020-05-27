@@ -8,7 +8,7 @@ import "bootstrap/dist/css/bootstrap.css";
 import "./styles/global.css";
 
 // Components
-import App from "./components/App";
+import App from "./components/App/App";
 
 ReactDOM.render(
 	<BrowserRouter>
