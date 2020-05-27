@@ -27,8 +27,8 @@ export default function AlbumsListElement(props) {
 					<p>
 						{" "}
 						{props.album.metrics.score} (
-						{props.album.metrics.ratio * 100} / 100 calculated
-						rating)
+						{Math.round(props.album.metrics.ratio * 10000) / 100} /
+						100 calculated rating)
 					</p>
 				</div>
 			</div>

@@ -10,13 +10,13 @@ export default class AlbumsContainer extends Component {
 		const values = queryString.parse(this.props.location.search);
 
 		this.state = {
+			access_token: values.access_token,
+			refresh_token: values.refresh_token,
+			fetching_progress: "",
 			user_loading: true,
 			albums_loading: true,
 			error: null,
-			access_token: values.access_token,
-			refresh_token: values.refresh_token,
 			user: null,
-			fetching_progress: "",
 			trackList: [],
 			albumList: [],
 			albumCoverArtList: [],
@@ -26,8 +26,12 @@ export default class AlbumsContainer extends Component {
 	}
 
 	componentDidMount() {
-		this.fetchTracks();
-		this.fetchUser();
+		if (this.state.access_token) {
+			this.fetchTracks();
+			this.fetchUser();
+		} else {
+			this.props.history.push("/");
+		}
 	}
 
 	// Fetch error handler
@@ -125,18 +129,15 @@ export default class AlbumsContainer extends Component {
 	};
 
 	getScore = (ratio) => {
-		let score = "☆☆☆☆☆";
-		if (ratio >= 0.2) {
-			score = "⭐☆☆☆☆";
-			if (ratio >= 0.4) {
-				score = "⭐⭐☆☆☆";
-				if (ratio >= 0.6) {
-					score = "⭐⭐⭐☆☆";
-					if (ratio >= 0.8) {
-						score = "⭐⭐⭐⭐☆";
-						if (ratio == 1) {
-							score = "⭐⭐⭐⭐⭐";
-						}
+		let score = "⭐☆☆☆☆";
+		if (ratio >= 0.25) {
+			score = "⭐⭐☆☆☆";
+			if (ratio >= 0.5) {
+				score = "⭐⭐⭐☆☆";
+				if (ratio >= 0.75) {
+					score = "⭐⭐⭐⭐☆";
+					if (ratio === 1) {
+						score = "⭐⭐⭐⭐⭐";
 					}
 				}
 			}
@@ -224,20 +225,13 @@ export default class AlbumsContainer extends Component {
 	};
 
 	albumListSort = (albumList) => {
-		let sortedAlbumList = albumList.sort(function (a, b) {
-			if (a.metrics.ratio < b.metrics.ratio) {
-				return 1;
-			}
-			if (a.ratio > b.ratio) {
-				return -1;
-			}
-			return 0;
+		let sortedAlbumList = albumList.sort((a, b) => {
+			return b.metrics.ratio - a.metrics.ratio;
 		});
 
 		this.setState({
 			sortedAlbumList: sortedAlbumList,
 		});
-
 		this.albumCoverArtListPopulate(sortedAlbumList);
 		this.sliceArrayInChunks(sortedAlbumList, 20);
 	};

@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 
+import config from "../../config";
+
 import collageLogo from "../../images/collage logo.png";
 import SpotifyLogoWhite from "../../images/Spotify Logo White.png";
 
@@ -149,7 +151,7 @@ export default class AlbumsList extends Component {
 		fetch("https://api.imgur.com/3/image", {
 			method: "POST",
 			headers: {
-				Authorization: "Client-ID 9bd4654a0ee1f87",
+				Authorization: config.imgur_client_id,
 			},
 			body: formData,
 			redirect: "follow",
@@ -261,6 +263,7 @@ export default class AlbumsList extends Component {
 							</div>
 						</div>
 					</div>
+
 					{this.listElements()}
 
 					<br />
