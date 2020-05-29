@@ -16,6 +16,7 @@
 		"gulp-json-editor": "^2.5.4",
 		"http-proxy-middleware": "^1.0.3",
 		"nodemon": "^2.0.2",
+		"opn": "^6.0.0",
 		"query-string": "^6.11.1",
 		"querystring": "^0.2.0",
 		"react": "^16.13.0",
@@ -27,7 +28,8 @@
 		"request": "^2.88.2"
 	},
 	"scripts": {
-		"start": "react-scripts start",
+		"start": "gnome-terminal -- react-scripts start && NODE_ENV=development nodemon server.js",
+		"stage": "react-scripts build && NODE_ENV=staging nodemon server.js;",
 		"build": "react-scripts build",
 		"test": "react-scripts test",
 		"eject": "react-scripts eject"
@@ -36,8 +38,16 @@
 		"extends": "react-app"
 	},
 	"browserslist": {
-		"production": [">0.2%", "not dead", "not op_mini all"],
-		"development": ["last 1 chrome version", "last 1 firefox version", "last 1 safari version"]
+		"production": [
+			">0.2%",
+			"not dead",
+			"not op_mini all"
+		],
+		"development": [
+			"last 1 chrome version",
+			"last 1 firefox version",
+			"last 1 safari version"
+		]
 	},
 	"proxy": "http://localhost:8888",
 	"version": "0.2.0"

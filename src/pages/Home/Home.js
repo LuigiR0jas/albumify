@@ -4,6 +4,17 @@ import "./styles/Home.css";
 import SpotifyLogoWhite from "../../images/Spotify Logo White.png";
 
 export default class Home extends React.Component {
+	constructor(props) {
+		super(props);
+
+		this.state = {
+			login_url:
+				process.env.NODE_ENV === "development"
+					? "http://localhost:8888/login"
+					: "/login",
+		};
+	}
+
 	render() {
 		return (
 			<div className="home-container container-fluid align-items-center">
@@ -25,7 +36,7 @@ export default class Home extends React.Component {
 				</div>
 				<br />
 				<div className="row justify-content-center">
-					<a href="/login" className="btn btn-primary">
+					<a href={this.state.login_url} className="btn btn-primary">
 						Login with{"  "}
 						<img
 							className="btn__logo"
