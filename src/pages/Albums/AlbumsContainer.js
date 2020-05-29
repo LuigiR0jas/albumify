@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import queryString from "query-string";
 
 import Albums from "./Albums";
+import defaultAvatar from "../../images/default.png";
 
 export default class AlbumsContainer extends Component {
 	constructor(props) {
@@ -57,7 +58,10 @@ export default class AlbumsContainer extends Component {
 					user_loading: false,
 					user: {
 						displayName: data.display_name,
-						avatar: data.images[0].url,
+						avatar:
+							data.images.length !== 0
+								? data.images[0].url
+								: defaultAvatar,
 						email: data.email,
 						href: data.href,
 						id: data.id,
