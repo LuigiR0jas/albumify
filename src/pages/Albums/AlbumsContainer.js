@@ -129,7 +129,8 @@ export default class AlbumsContainer extends Component {
 	};
 
 	getRatio = (likes, totalTracks) => {
-		return Math.round((likes / totalTracks) * 10000) / 10000;
+		let ratio = Math.round((likes / totalTracks) * 10000) / 10000;
+		return ratio <= 1 ? ratio : 1;
 	};
 
 	getScore = (ratio) => {
@@ -205,7 +206,7 @@ export default class AlbumsContainer extends Component {
 					albumList = this.addAlbum(albumList, track);
 				} else {
 					for (let i = 0; i < albumList.length; i++) {
-						if (albumList[i].name == track.album.name) {
+						if (albumList[i].id === track.album.id) {
 							albumList[i] = this.updateAlbum(
 								albumList[i],
 								track
