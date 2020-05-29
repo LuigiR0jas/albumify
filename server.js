@@ -10,14 +10,32 @@ var cors = require("cors");
 var querystring = require("querystring");
 var cookieParser = require("cookie-parser");
 var config = require("./src/config.json");
-var os = require("os");
 var port = process.env.PORT || 8888;
 
 var client_id = config.client_id;
 var client_secret = config.client_secret;
-var redirect_uri = process.env.NODE_ENV
-	? config.prod_redirect_uri
-	: config.dev_redirect_uri;
+var redirect_uri, resolve_callback_uri;
+
+console.log(process.env.NODE_ENV);
+switch (process.env.NODE_ENV) {
+	case "development":
+		redirect_uri = config.dev_redirect_uri;
+		resolve_callback_uri = config.dev_resolve_callback_uri;
+		break;
+
+	case "staging":
+		redirect_uri = config.dev_redirect_uri;
+		resolve_callback_uri = config.resolve_callback_uri;
+		break;
+
+	case "production":
+		redirect_uri = config.redirect_uri;
+		resolve_callback_uri = config.resolve_callback_uri;
+		break;
+
+	default:
+		break;
+}
 
 /**
  * Generates a random string containing numbers and letters
@@ -115,7 +133,7 @@ app.get("/callback", function (req, res) {
 
 				// we can also pass the token to the browser to make requests from there
 				res.redirect(
-					"/albums?" +
+					resolve_callback_uri +
 						querystring.stringify({
 							access_token: access_token,
 							refresh_token: refresh_token,
@@ -167,3 +185,8 @@ app.get("*", (req, res) => {
 
 app.listen(port);
 console.log("Listening on ", port);
+if (process.env.NODE_ENV === "staging") {
+	// Open URL On Server Start
+	var opn = require("opn");
+	opn(`http://localhost:${port}`);
+}
